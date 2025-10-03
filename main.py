@@ -44,6 +44,15 @@ def detect_face(img: np.ndarray, face_class: cv.CascadeClassifier) -> np.ndarray
     return face_img
 
 def calc_euclidean_distance(embedding_one, embedding_two):
+    """Method to calculate the Euclidean Distance between two face embeddings
+    
+    Args:
+        embedding_one: the nd.array for the first face embedding
+        embedding_two: the nd.array for the second face embedding
+    
+    Returns:
+        distance: the normalized difference between the two embeddings
+    """
     distance = np.linalg.norm(embedding_one - embedding_two)
     return distance
 
@@ -96,12 +105,9 @@ def main() -> None:
 
     # Need to adjust the size because the two images need to be same shape
     # Getting size from center here
-    for (x, y, w, h) in johnny_face:
-        center_x = x + w // 2
-        center_y = y + h // 2
-        new_x = target_width // 2
-        new_y = target_height // 2
-        fixed_sizes.append((new_x, new_y, target_width, target_height))
+    new_x = target_width // 2
+    new_y = target_height // 2
+    fixed_sizes.append((new_x, new_y, target_width, target_height))
     # Reshaping the images here to same shape
     for (x, y, w, h) in fixed_sizes:
         cv.rectangle(johnny_face, (x, y), (x + w, y + h), (0, 255, 0), 10)
